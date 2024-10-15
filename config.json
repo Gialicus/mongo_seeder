@@ -1,0 +1,42 @@
+{
+  "url": "mongodb://root:password123@localhost:27017",
+  "db": "test_db",
+  "collections": [
+    {
+      "name": "users",
+      "number_of_items": 50,
+      "number_of_children": 5,
+      "schema": {
+        "firstName": "fake.name.firstName",
+        "lastName": "fake.name.lastName",
+        "emails": ["fake.internet.email"],
+        "address": {
+          "city": "fake.address.city",
+          "street": "fake.address.streetName",
+          "zipCode": "fake.address.zipCode"
+        },
+        "friends": [
+          {
+            "firstName": "fake.name.firstName",
+            "lastName": "fake.name.lastName"
+          }
+        ],
+        "age": "fake.number.u8"
+      }
+    },
+    {
+      "name": "products",
+      "number_of_items": 20,
+      "schema": {
+        "productName": "fake.name.fullName",
+        "price": "fake.number.i32",
+        "reviews": [
+          {
+            "username": "fake.internet.username",
+            "rating": "fake.number.u8"
+          }
+        ]
+      }
+    }
+  ]
+}
