@@ -170,3 +170,95 @@ pub fn generate_ids_pool(
 
     ids_pool
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use serde_json::json;
+
+    #[test]
+    fn test_generate_fake_value() {
+        let ids_pool = HashMap::new();
+
+        assert!(matches!(
+            generate_fake_value("fake.name.firstName", &ids_pool),
+            mongodb::bson::Bson::String(_)
+        ));
+        assert!(matches!(
+            generate_fake_value("fake.address.city", &ids_pool),
+            mongodb::bson::Bson::String(_)
+        ));
+        assert!(matches!(
+            generate_fake_value("fake.number.i32", &ids_pool),
+            mongodb::bson::Bson::Int32(_)
+        ));
+        assert!(matches!(
+            generate_fake_value("fake.currency.code", &ids_pool),
+            mongodb::bson::Bson::String(_)
+        ));
+        assert!(matches!(
+            generate_fake_value("fake.random.uuid", &ids_pool),
+            mongodb::bson::Bson::String(_)
+        ));
+    }
+
+    #[test]
+    fn test_generate_data() {
+        let schema = json!({
+            "first_name": "fake.name.firstName",
+            "last_name": "fake.name.lastName",
+            "address": {
+                "street": "fake.address.streetName",
+                "city": "fake.address.city"
+            },
+            "emails": ["fake.internet.email"],
+            "numbers": ["fake.number.i32"]
+        });
+
+        let ids_pool = HashMap::new();
+        let schema_map: HashMap<String, serde_json::Value> =
+            schema.as_object().unwrap().clone().into_iter().collect();
+        let generated_data = generate_data(&schema_map, 3, &ids_pool);
+
+        assert!(generated_data
+            .as_document()
+            .unwrap()
+            .contains_key("first_name"));
+        assert!(generated_data
+            .as_document()
+            .unwrap()
+            .contains_key("last_name"));
+        assert!(generated_data
+            .as_document()
+            .unwrap()
+            .contains_key("address"));
+        assert!(generated_data.as_document().unwrap().contains_key("emails"));
+        assert!(generated_data
+            .as_document()
+            .unwrap()
+            .contains_key("numbers"));
+    }
+
+    #[test]
+    fn test_generate_ids_pool() {
+        let collections_config = vec![
+            CollectionConfig {
+                name: "users".to_string(),
+                number_of_items: 5,
+                number_of_children: 2,  // Add appropriate value
+                schema: HashMap::new(), // Add appropriate schema
+            },
+            CollectionConfig {
+                name: "orders".to_string(),
+                number_of_items: 3,
+                number_of_children: 2,  // Add appropriate value
+                schema: HashMap::new(), // Add appropriate schema
+            },
+        ];
+
+        let ids_pool = generate_ids_pool(&collections_config);
+
+        assert_eq!(ids_pool.get("users").unwrap().len(), 5);
+        assert_eq!(ids_pool.get("orders").unwrap().len(), 3);
+    }
+}
