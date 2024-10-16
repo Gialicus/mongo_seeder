@@ -4,7 +4,6 @@ use std::collections::HashMap;
 
 #[derive(Debug, Deserialize)]
 pub struct Config {
-    pub url: String,
     pub db: String,
     pub collections: Vec<CollectionConfig>,
 }
@@ -33,4 +32,6 @@ pub struct CollectionConfig {
 pub struct Cli {
     #[arg(short, long)]
     pub config: String,
+    #[arg(short, long)]
+    pub url: String,
 }

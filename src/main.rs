@@ -23,7 +23,7 @@ async fn main() -> mongodb::error::Result<()> {
         read_config::read_config(&args.config).expect("Error reading the configuration file");
 
     // Connect to MongoDB
-    let client = Client::with_uri_str(&config.url).await?;
+    let client = Client::with_uri_str(&args.url).await?;
     let database = client.database(&config.db);
 
     // Generate a pool of IDs for the collections

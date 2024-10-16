@@ -1,3 +1,33 @@
+# Mongo Seeder CLI
+
+This project is a CLI written in Rust to populate a MongoDB database with sample data based on schema.
+
+## Installation
+
+Make sure you have [Rust](https://www.rust-lang.org/) installed. Then, clone the repository and build the project:
+
+```sh
+git clone https://github.com/gialicus/mongo_seeder.git
+cd mongo_seeder
+cargo build --release
+```
+
+## Usage
+
+Run the following command to start the seeder:
+
+```sh
+./target/release/mongo_seeder --url <MONGO_URL> --config <FILE_PATH>
+```
+
+## Options
+
+--url: The MongoDB connection URI.
+--config: The path to the JSON file containing the schema.
+
+## Configuration
+
+```json
 {
   "db": "test_db",
   "collections": [
@@ -56,3 +86,4 @@
     }
   ]
 }
+```
