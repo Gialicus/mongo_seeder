@@ -5,8 +5,9 @@ edition = "2021"
 
 [dependencies]
 clap = { version = "4.5.20", features = ["derive"] }
-fake = { version = "2.10.0", features = ["derive", "chrono"] }
+fake = { version = "2.10.0", features = ["derive", "chrono", "uuid"] }
 mongodb = "3.1.0"
+rand = "0.8.5"
 serde = { version = "1.0.210", features = ["derive"] }
 serde_json = "1.0.128"
 tokio = { version = "1.40.0", features = ["full"] }

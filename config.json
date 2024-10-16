@@ -30,12 +30,29 @@
       "schema": {
         "productName": "fake.name.fullName",
         "price": "fake.number.i32",
+        "category": "ref.categories",
         "reviews": [
           {
             "username": "fake.internet.username",
             "rating": "fake.number.u8"
           }
         ]
+      }
+    },
+    {
+      "name": "orders",
+      "number_of_items": 10,
+      "schema": {
+        "orderNumber": "fake.random.uuid",
+        "user": "ref.users",
+        "products": ["ref.products"]
+      }
+    },
+    {
+      "name": "categories",
+      "number_of_items": 5,
+      "schema": {
+        "categoryName": "fake.internet.username"
       }
     }
   ]

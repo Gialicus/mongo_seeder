@@ -1,6 +1,11 @@
+use std::collections::HashMap;
+
 use clap::Parser;
 use insert::insert_documents;
-use mongodb::{bson::Document, Client};
+use mongodb::{
+    bson::{oid::ObjectId, Document},
+    Client,
+};
 use types::Cli;
 
 mod generate_data;
@@ -10,40 +15,67 @@ mod types;
 
 #[tokio::main]
 async fn main() -> mongodb::error::Result<()> {
-    // Gestione della CLI con clap
+    // Parse command line arguments
     let args = Cli::parse();
 
-    // Leggi il file di configurazione JSON
-    let config = read_config::read_config(&args.config)
-        .expect("Errore nella lettura del file di configurazione");
+    // Read the JSON configuration file
+    let config =
+        read_config::read_config(&args.config).expect("Error reading the configuration file");
 
-    // Connettiti a MongoDB
+    // Connect to MongoDB
     let client = Client::with_uri_str(&config.url).await?;
     let database = client.database(&config.db);
 
-    // Cicla attraverso le collezioni specificate
+    // Generate a pool of IDs for the collections
+    let ids_pool = generate_data::generate_ids_pool(&config.collections);
+
+    // Process each collection
     for collection_config in config.collections {
-        let collection_name = collection_config.name.as_str();
-        let collection = database.collection::<Document>(collection_name);
-
-        // Generazione dei documenti per ogni collezione
-        let number_of_items = collection_config.number_of_items as usize;
-        let schema = collection_config.schema;
-
-        let mut documents = Vec::new();
-        for _ in 0..number_of_items {
-            let document =
-                generate_data::generate_data(&schema, collection_config.number_of_children);
-            documents.push(document);
-        }
-
-        // Inserisci i documenti nel database
-        insert_documents(collection, documents).await?;
-        println!(
-            "Inseriti {} documenti nella collezione '{}'",
-            number_of_items, collection_name
-        );
+        process_collection(&database, &collection_config, &ids_pool).await?;
     }
 
     Ok(())
+}
+
+async fn process_collection(
+    database: &mongodb::Database,
+    collection_config: &types::CollectionConfig,
+    ids_pool: &HashMap<String, Vec<ObjectId>>,
+) -> mongodb::error::Result<()> {
+    let collection_name = collection_config.name.as_str();
+    let collection = database.collection::<Document>(collection_name);
+
+    // Generate documents for the collection
+    let documents = generate_documents(collection_config, ids_pool);
+
+    // Insert the documents into the database
+    insert_documents(collection, &documents).await?;
+    println!(
+        "Inserted {} documents into the collection '{}'",
+        collection_config.number_of_items, collection_name
+    );
+
+    Ok(())
+}
+
+fn generate_documents(
+    collection_config: &types::CollectionConfig,
+    ids_pool: &HashMap<String, Vec<ObjectId>>,
+) -> Vec<Document> {
+    let number_of_items = collection_config.number_of_items as usize;
+    let schema = &collection_config.schema;
+
+    let mut documents = Vec::new();
+    for i in 0..number_of_items {
+        // Generate a single document based on the schema
+        let mut document =
+            generate_data::generate_data(schema, collection_config.number_of_children, ids_pool);
+        // Assign a unique ID to the document
+        let collection_id = ids_pool.get(&collection_config.name).unwrap();
+        let doc = document.as_document_mut().unwrap();
+        doc.insert("_id".to_string(), collection_id[i].clone());
+        documents.push(doc.clone());
+    }
+
+    documents
 }
