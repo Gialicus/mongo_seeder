@@ -208,6 +208,9 @@ fake.number.u8
 fake.number.i32
 fake.number.u32
 fake.number.i64
+fake.number.u64
+fake.number.f32
+fake.number.f64
 ```
 
 #### Uuid

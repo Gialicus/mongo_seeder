@@ -202,6 +202,9 @@ fn generate_fake_value(
         "fake.number.i32" => mongodb::bson::Bson::Int32((0..=1000).fake::<i32>()),
         "fake.number.u32" => mongodb::bson::Bson::Int64((0..=1000).fake::<u32>() as i64),
         "fake.number.i64" => mongodb::bson::Bson::Int64((0..=1000).fake::<i64>()),
+        "fake.number.u64" => mongodb::bson::Bson::Int64((0..=1000).fake::<u64>() as i64),
+        "fake.number.f32" => mongodb::bson::Bson::Double((0.0..1000.0).fake::<f32>() as f64),
+        "fake.number.f64" => mongodb::bson::Bson::Double((0.0..=1000.0).fake::<f64>()),
 
         "fake.random.uuid" => mongodb::bson::Bson::String(fake::uuid::UUIDv4.fake::<String>()),
 
