@@ -3,7 +3,7 @@
   "collections": [
     {
       "name": "users",
-      "number_of_items": 50,
+      "number_of_items": 500,
       "number_of_children": 5,
       "schema": {
         "firstName": "fake.name.firstName",
@@ -25,7 +25,7 @@
     },
     {
       "name": "products",
-      "number_of_items": 20,
+      "number_of_items": 200,
       "schema": {
         "productName": "fake.name.fullName",
         "price": "fake.number.i32",
@@ -40,16 +40,17 @@
     },
     {
       "name": "orders",
-      "number_of_items": 10,
+      "number_of_items": 1000,
       "schema": {
         "orderNumber": "fake.random.uuid",
         "user": "ref.users",
+        "status": "from.created|processed|shipped",
         "products": ["ref.products"]
       }
     },
     {
       "name": "categories",
-      "number_of_items": 5,
+      "number_of_items": 50,
       "schema": {
         "categoryName": "fake.internet.username"
       }
