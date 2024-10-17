@@ -95,6 +95,7 @@ Run the following command to start the seeder:
 
 #### Address
 
+```
 fake.address.buildingNumber
 fake.address.cityName
 fake.address.cityPrefix
@@ -111,20 +112,26 @@ fake.address.streetName
 fake.address.streetSuffix
 fake.address.timeZone
 fake.address.zipCode
+```
 
 #### Boolean
 
+```
 fake.boolean.boolean
+```
 
 #### Crono
 
+```
 fake.chrono.date
 fake.chrono.datetime
 fake.chrono.duration
 fake.chrono.time
+```
 
 #### Company
 
+```
 fake.company.bs
 fake.company.buzzword
 fake.company.catchPhrase
@@ -132,26 +139,34 @@ fake.company.name
 fake.company.profession
 fake.company.suffix
 fake.company.industry
+```
 
 #### Carta di Credito
 
+```
 fake.creditCard.number
+```
 
 #### Currency
 
+```
 fake.currency.code
 fake.currency.name
 fake.currency.symbol
+```
 
 #### FileSystem
 
+```
 fake.fileSystem.extension
 fake.fileSystem.fileName
 fake.fileSystem.filePath
 fake.fileSystem.mimeType
+```
 
 #### Internet
 
+```
 fake.internet.domainSuffix
 fake.internet.freeEmail
 fake.internet.ipV4
@@ -159,41 +174,56 @@ fake.internet.ipV6
 fake.internet.password
 fake.internet.email
 fake.internet.username
+```
 
 #### Job
 
+```
 fake.job.field
 fake.job.position
 fake.job.seniority
 fake.job.title
+```
 
 #### Lorem
 
+```
 fake.lorem.sentence
 fake.lorem.word
 fake.lorem.paragraph
+```
 
 #### Name
 
+```
 fake.name.firstName
 fake.name.lastName
 fake.name.fullName
+```
 
 #### Number
 
+```
 fake.number.u8
 fake.number.i32
 fake.number.u32
 fake.number.i64
+```
 
 #### Uuid
 
+```
 fake.random.uuid
+```
 
 #### Reference
 
+```
 ref.<collection_name>
+```
 
 #### Random from list of value
 
+```
 from.<value1|value2|...>
+```
