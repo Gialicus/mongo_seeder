@@ -10,7 +10,7 @@
         "lastName": "fake.name.lastName",
         "emails": ["fake.internet.email"],
         "address": {
-          "city": "fake.address.city",
+          "city": "fake.address.cityName",
           "street": "fake.address.streetName",
           "zipCode": "fake.address.zipCode"
         },

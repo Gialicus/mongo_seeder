@@ -13,137 +13,185 @@ use mongodb::bson::{oid::ObjectId, Bson};
 use rand::seq::SliceRandom;
 use std::collections::HashMap;
 
+use crate::error::GenerateDataError;
 use crate::types::CollectionConfig;
 
 /// Generates a fake value based on the method string.
-fn generate_fake_value(fake_method: &str, ids_pool: &HashMap<String, Vec<ObjectId>>) -> Bson {
+fn generate_fake_value(
+    fake_method: &str,
+    ids_pool: &HashMap<String, Vec<ObjectId>>,
+) -> Result<Bson, GenerateDataError> {
     match fake_method {
         // Address
-        "fake.address.buildingNumber" => {
-            Bson::String(BuildingNumber(fake::locales::EN).fake::<String>())
+        "fake.address.buildingNumber" => Ok(Bson::String(
+            BuildingNumber(fake::locales::EN).fake::<String>(),
+        )),
+        "fake.address.cityName" => Ok(Bson::String(CityName(fake::locales::EN).fake::<String>())),
+        "fake.address.cityPrefix" => {
+            Ok(Bson::String(CityPrefix(fake::locales::EN).fake::<String>()))
         }
-        "fake.address.cityName" => Bson::String(CityName(fake::locales::EN).fake::<String>()),
-        "fake.address.cityPrefix" => Bson::String(CityPrefix(fake::locales::EN).fake::<String>()),
-        "fake.address.citySuffix" => Bson::String(CitySuffix(fake::locales::EN).fake::<String>()),
-        "fake.address.countryCode" => Bson::String(CountryCode(fake::locales::EN).fake::<String>()),
-        "fake.address.countryName" => Bson::String(CountryName(fake::locales::EN).fake::<String>()),
-        "fake.address.latitude" => Bson::String(Latitude(fake::locales::EN).fake::<String>()),
-        "fake.address.longitude" => Bson::String(Longitude(fake::locales::EN).fake::<String>()),
-        "fake.address.postCode" => Bson::String(PostCode(fake::locales::EN).fake::<String>()),
-        "fake.address.secondaryAddress" => {
-            Bson::String(SecondaryAddress(fake::locales::EN).fake::<String>())
+        "fake.address.citySuffix" => {
+            Ok(Bson::String(CitySuffix(fake::locales::EN).fake::<String>()))
         }
-        "fake.address.stateAbbr" => Bson::String(StateAbbr(fake::locales::EN).fake::<String>()),
-        "fake.address.stateName" => Bson::String(StateName(fake::locales::EN).fake::<String>()),
-        "fake.address.streetName" => Bson::String(StreetName(fake::locales::EN).fake::<String>()),
-        "fake.address.streetSuffix" => {
-            Bson::String(StreetSuffix(fake::locales::EN).fake::<String>())
+        "fake.address.countryCode" => Ok(Bson::String(
+            CountryCode(fake::locales::EN).fake::<String>(),
+        )),
+        "fake.address.countryName" => Ok(Bson::String(
+            CountryName(fake::locales::EN).fake::<String>(),
+        )),
+        "fake.address.latitude" => Ok(Bson::String(Latitude(fake::locales::EN).fake::<String>())),
+        "fake.address.longitude" => Ok(Bson::String(Longitude(fake::locales::EN).fake::<String>())),
+        "fake.address.postCode" => Ok(Bson::String(PostCode(fake::locales::EN).fake::<String>())),
+        "fake.address.secondaryAddress" => Ok(Bson::String(
+            SecondaryAddress(fake::locales::EN).fake::<String>(),
+        )),
+        "fake.address.stateAbbr" => Ok(Bson::String(StateAbbr(fake::locales::EN).fake::<String>())),
+        "fake.address.stateName" => Ok(Bson::String(StateName(fake::locales::EN).fake::<String>())),
+        "fake.address.streetName" => {
+            Ok(Bson::String(StreetName(fake::locales::EN).fake::<String>()))
         }
-        "fake.address.timeZone" => Bson::String(TimeZone(fake::locales::EN).fake::<String>()),
-        "fake.address.zipCode" => Bson::String(ZipCode(fake::locales::EN).fake::<String>()),
+        "fake.address.streetSuffix" => Ok(Bson::String(
+            StreetSuffix(fake::locales::EN).fake::<String>(),
+        )),
+        "fake.address.timeZone" => Ok(Bson::String(TimeZone(fake::locales::EN).fake::<String>())),
+        "fake.address.zipCode" => Ok(Bson::String(ZipCode(fake::locales::EN).fake::<String>())),
 
         // Boolean
-        "fake.boolean.boolean" => Bson::Boolean(Boolean(fake::locales::EN, 1).fake()),
+        "fake.boolean.boolean" => Ok(Bson::Boolean(Boolean(fake::locales::EN, 1).fake())),
 
         // Chrono
-        "fake.chrono.date" => {
-            Bson::String(fake::faker::chrono::raw::Date(fake::locales::EN).fake::<String>())
-        }
-        "fake.chrono.datetime" => {
-            Bson::String(fake::faker::chrono::raw::DateTime(fake::locales::EN).fake::<String>())
-        }
-        "fake.chrono.duration" => Bson::String(
+        "fake.chrono.date" => Ok(Bson::String(
+            fake::faker::chrono::raw::Date(fake::locales::EN).fake::<String>(),
+        )),
+        "fake.chrono.datetime" => Ok(Bson::String(
+            fake::faker::chrono::raw::DateTime(fake::locales::EN).fake::<String>(),
+        )),
+        "fake.chrono.duration" => Ok(Bson::String(
             fake::faker::number::raw::NumberWithFormat(fake::locales::EN, "###").fake::<String>(),
-        ),
-        "fake.chrono.time" => {
-            Bson::String(fake::faker::chrono::raw::Time(fake::locales::EN).fake::<String>())
-        }
+        )),
+        "fake.chrono.time" => Ok(Bson::String(
+            fake::faker::chrono::raw::Time(fake::locales::EN).fake::<String>(),
+        )),
 
         // Company
-        "fake.company.bs" => Bson::String(Bs(fake::locales::EN).fake::<String>()),
-        "fake.company.buzzword" => Bson::String(Buzzword(fake::locales::EN).fake::<String>()),
-        "fake.company.catchPhrase" => Bson::String(CatchPhrase(fake::locales::EN).fake::<String>()),
-        "fake.company.name" => Bson::String(CompanyName(fake::locales::EN).fake::<String>()),
-        "fake.company.profession" => Bson::String(Profession(fake::locales::EN).fake::<String>()),
-        "fake.company.suffix" => Bson::String(Suffix(fake::locales::EN).fake::<String>()),
-        "fake.company.industry" => Bson::String(Industry(fake::locales::EN).fake::<String>()),
+        "fake.company.bs" => Ok(Bson::String(Bs(fake::locales::EN).fake::<String>())),
+        "fake.company.buzzword" => Ok(Bson::String(Buzzword(fake::locales::EN).fake::<String>())),
+        "fake.company.catchPhrase" => Ok(Bson::String(
+            CatchPhrase(fake::locales::EN).fake::<String>(),
+        )),
+        "fake.company.name" => Ok(Bson::String(
+            CompanyName(fake::locales::EN).fake::<String>(),
+        )),
+        "fake.company.profession" => {
+            Ok(Bson::String(Profession(fake::locales::EN).fake::<String>()))
+        }
+        "fake.company.suffix" => Ok(Bson::String(Suffix(fake::locales::EN).fake::<String>())),
+        "fake.company.industry" => Ok(Bson::String(Industry(fake::locales::EN).fake::<String>())),
 
         // CreditCard
-        "fake.creditCard.number" => {
-            Bson::String(CreditCardNumber(fake::locales::EN).fake::<String>())
-        }
+        "fake.creditCard.number" => Ok(Bson::String(
+            CreditCardNumber(fake::locales::EN).fake::<String>(),
+        )),
 
         // Currency
-        "fake.currency.code" => Bson::String(CurrencyCode(fake::locales::EN).fake::<String>()),
-        "fake.currency.name" => Bson::String(CurrencyName(fake::locales::EN).fake::<String>()),
-        "fake.currency.symbol" => Bson::String(CurrencySymbol(fake::locales::EN).fake::<String>()),
+        "fake.currency.code" => Ok(Bson::String(
+            CurrencyCode(fake::locales::EN).fake::<String>(),
+        )),
+        "fake.currency.name" => Ok(Bson::String(
+            CurrencyName(fake::locales::EN).fake::<String>(),
+        )),
+        "fake.currency.symbol" => Ok(Bson::String(
+            CurrencySymbol(fake::locales::EN).fake::<String>(),
+        )),
 
         // FileSystem
-        "fake.fileSystem.extension" => {
-            Bson::String(FileExtension(fake::locales::EN).fake::<String>())
+        "fake.fileSystem.extension" => Ok(Bson::String(
+            FileExtension(fake::locales::EN).fake::<String>(),
+        )),
+        "fake.fileSystem.fileName" => {
+            Ok(Bson::String(FileName(fake::locales::EN).fake::<String>()))
         }
-        "fake.fileSystem.fileName" => Bson::String(FileName(fake::locales::EN).fake::<String>()),
-        "fake.fileSystem.filePath" => Bson::String(FilePath(fake::locales::EN).fake::<String>()),
-        "fake.fileSystem.mimeType" => Bson::String(MimeType(fake::locales::EN).fake::<String>()),
+        "fake.fileSystem.filePath" => {
+            Ok(Bson::String(FilePath(fake::locales::EN).fake::<String>()))
+        }
+        "fake.fileSystem.mimeType" => {
+            Ok(Bson::String(MimeType(fake::locales::EN).fake::<String>()))
+        }
 
         // Internet
-        "fake.internet.domainSuffix" => {
-            Bson::String(DomainSuffix(fake::locales::EN).fake::<String>())
+        "fake.internet.domainSuffix" => Ok(Bson::String(
+            DomainSuffix(fake::locales::EN).fake::<String>(),
+        )),
+        "fake.internet.freeEmail" => {
+            Ok(Bson::String(FreeEmail(fake::locales::EN).fake::<String>()))
         }
-        "fake.internet.freeEmail" => Bson::String(FreeEmail(fake::locales::EN).fake::<String>()),
-        "fake.internet.ipV4" => Bson::String(IPv4(fake::locales::EN).fake::<String>()),
-        "fake.internet.ipV6" => Bson::String(IPv6(fake::locales::EN).fake::<String>()),
-        "fake.internet.password" => {
-            Bson::String(Password(fake::locales::EN, 8..12).fake::<String>())
-        }
-        "fake.internet.email" => Bson::String(FreeEmail(fake::locales::EN).fake::<String>()),
-        "fake.internet.username" => Bson::String(Username(fake::locales::EN).fake::<String>()),
+        "fake.internet.ipV4" => Ok(Bson::String(IPv4(fake::locales::EN).fake::<String>())),
+        "fake.internet.ipV6" => Ok(Bson::String(IPv6(fake::locales::EN).fake::<String>())),
+        "fake.internet.password" => Ok(Bson::String(
+            Password(fake::locales::EN, 8..12).fake::<String>(),
+        )),
+        "fake.internet.email" => Ok(Bson::String(FreeEmail(fake::locales::EN).fake::<String>())),
+        "fake.internet.username" => Ok(Bson::String(Username(fake::locales::EN).fake::<String>())),
 
         // Job
-        "fake.job.field" => Bson::String(Field(fake::locales::EN).fake::<String>()),
-        "fake.job.position" => Bson::String(Position(fake::locales::EN).fake::<String>()),
-        "fake.job.seniority" => Bson::String(Seniority(fake::locales::EN).fake::<String>()),
-        "fake.job.title" => Bson::String(JobTitle(fake::locales::EN).fake::<String>()),
+        "fake.job.field" => Ok(Bson::String(Field(fake::locales::EN).fake::<String>())),
+        "fake.job.position" => Ok(Bson::String(Position(fake::locales::EN).fake::<String>())),
+        "fake.job.seniority" => Ok(Bson::String(Seniority(fake::locales::EN).fake::<String>())),
+        "fake.job.title" => Ok(Bson::String(JobTitle(fake::locales::EN).fake::<String>())),
 
         // Lorem
-        "fake.lorem.sentence" => Bson::String(Sentence(fake::locales::EN, 1..5).fake::<String>()),
-        "fake.lorem.word" => Bson::String(Word(fake::locales::EN).fake::<String>()),
-        "fake.lorem.paragraph" => Bson::String(Paragraph(fake::locales::EN, 1..5).fake::<String>()),
+        "fake.lorem.sentence" => Ok(Bson::String(
+            Sentence(fake::locales::EN, 1..5).fake::<String>(),
+        )),
+        "fake.lorem.word" => Ok(Bson::String(Word(fake::locales::EN).fake::<String>())),
+        "fake.lorem.paragraph" => Ok(Bson::String(
+            Paragraph(fake::locales::EN, 1..5).fake::<String>(),
+        )),
 
         // Name
-        "fake.name.firstName" => Bson::String(FirstName(fake::locales::EN).fake::<String>()),
-        "fake.name.lastName" => Bson::String(LastName(fake::locales::EN).fake::<String>()),
-        "fake.name.fullName" => Bson::String(format!(
+        "fake.name.firstName" => Ok(Bson::String(FirstName(fake::locales::EN).fake::<String>())),
+        "fake.name.lastName" => Ok(Bson::String(LastName(fake::locales::EN).fake::<String>())),
+        "fake.name.fullName" => Ok(Bson::String(format!(
             "{} {}",
             FirstName(fake::locales::EN).fake::<String>(),
             LastName(fake::locales::EN).fake::<String>()
-        )),
+        ))),
 
-        "fake.number.u8" => Bson::Int32((0..=255).fake::<u8>() as i32),
-        "fake.number.i32" => Bson::Int32((0..=1000).fake::<i32>()),
-        "fake.number.u32" => Bson::Int64((0..=1000).fake::<u32>() as i64),
-        "fake.number.i64" => Bson::Int64((0..=1000).fake::<i64>()),
-        "fake.number.u64" => Bson::Int64((0..=1000).fake::<u64>() as i64),
-        "fake.number.f32" => Bson::Double((0.0..1000.0).fake::<f32>() as f64),
-        "fake.number.f64" => Bson::Double((0.0..=1000.0).fake::<f64>()),
+        "fake.number.u8" => Ok(Bson::Int32((0..=255).fake::<u8>() as i32)),
+        "fake.number.i32" => Ok(Bson::Int32((0..=1000).fake::<i32>())),
+        "fake.number.u32" => Ok(Bson::Int64((0..=1000).fake::<u32>() as i64)),
+        "fake.number.i64" => Ok(Bson::Int64((0..=1000).fake::<i64>())),
+        "fake.number.u64" => Ok(Bson::Int64((0..=1000).fake::<u64>() as i64)),
+        "fake.number.f32" => Ok(Bson::Double((0.0..1000.0).fake::<f32>() as f64)),
+        "fake.number.f64" => Ok(Bson::Double((0.0..=1000.0).fake::<f64>())),
 
-        "fake.random.uuid" => Bson::String(fake::uuid::UUIDv4.fake::<String>()),
+        "fake.random.uuid" => Ok(Bson::String(fake::uuid::UUIDv4.fake::<String>())),
 
         method if fake_method.starts_with("ref") => {
             let collection_name = method.split('.').collect::<Vec<&str>>()[1];
-            let collection_id = ids_pool.get(collection_name).unwrap();
-            let random_id = collection_id.choose(&mut rand::thread_rng()).unwrap();
-            Bson::ObjectId(*random_id)
+            let collection_id = ids_pool.get(collection_name).ok_or_else(|| {
+                GenerateDataError::CollectionNotFound(collection_name.to_string())
+            })?;
+            let random_id = collection_id
+                .choose(&mut rand::thread_rng())
+                .ok_or_else(|| {
+                    GenerateDataError::RandomIdSelectionFailed(collection_name.to_string())
+                })?;
+            Ok(Bson::ObjectId(*random_id))
         }
 
         method if fake_method.starts_with("from") => {
             let sequence = method.split('.').collect::<Vec<&str>>()[1];
             let values = sequence.split('|').collect::<Vec<&str>>();
-            let random_value = values.choose(&mut rand::thread_rng()).unwrap();
-            Bson::String(random_value.to_string())
+            let random_value = values
+                .choose(&mut rand::thread_rng())
+                .ok_or_else(|| GenerateDataError::RandomIdSelectionFailed(sequence.to_string()))?;
+            Ok(Bson::String(random_value.to_string()))
         }
 
-        _ => Bson::String("unsupported_method".to_string()),
+        _ => Err(GenerateDataError::InvalidFakeMethod(
+            fake_method.to_string(),
+        )),
     }
 }
 
@@ -152,13 +200,13 @@ pub fn generate_data(
     schema: &HashMap<String, serde_json::Value>,
     number_of_children: usize,
     ids_pool: &HashMap<String, Vec<ObjectId>>,
-) -> Bson {
+) -> Result<Bson, GenerateDataError> {
     let mut document = mongodb::bson::Document::new();
 
     for (key, value) in schema.iter() {
         let generated_value = match value {
             // Scalar value represented as a string
-            serde_json::Value::String(fake_method) => generate_fake_value(fake_method, ids_pool),
+            serde_json::Value::String(fake_method) => generate_fake_value(fake_method, ids_pool)?,
 
             // Array of values or objects
             serde_json::Value::Array(array_spec) => {
@@ -168,7 +216,7 @@ pub fn generate_data(
                     // Array of primitive values (e.g., array of strings)
                     let generated_array: Vec<Bson> = (0..number_of_children)
                         .map(|_| generate_fake_value(fake_method, ids_pool))
-                        .collect();
+                        .collect::<Result<_, _>>()?;
                     Bson::Array(generated_array)
                 } else if let Some(serde_json::Value::Object(object_schema)) = array_spec.get(0) {
                     // Array of objects: each object follows a schema
@@ -183,7 +231,7 @@ pub fn generate_data(
                                 ids_pool,
                             )
                         })
-                        .collect();
+                        .collect::<Result<_, _>>()?;
                     Bson::Array(generated_array)
                 } else {
                     Bson::Array(vec![])
@@ -198,7 +246,7 @@ pub fn generate_data(
                         .collect(),
                     number_of_children,
                     ids_pool,
-                );
+                )?;
                 Bson::Document(nested_document.as_document().unwrap().clone())
             }
             _ => Bson::Null,
@@ -207,7 +255,7 @@ pub fn generate_data(
         document.insert(key.clone(), generated_value);
     }
 
-    Bson::Document(document)
+    Ok(Bson::Document(document))
 }
 
 /// Generates a pool of IDs for each collection specified in the configuration file.
@@ -239,23 +287,23 @@ mod tests {
 
         assert!(matches!(
             generate_fake_value("fake.name.firstName", &ids_pool),
-            Bson::String(_)
+            Ok(Bson::String(_))
         ));
         assert!(matches!(
-            generate_fake_value("fake.address.city", &ids_pool),
-            Bson::String(_)
+            generate_fake_value("fake.address.cityName", &ids_pool),
+            Ok(Bson::String(_))
         ));
         assert!(matches!(
             generate_fake_value("fake.number.i32", &ids_pool),
-            Bson::Int32(_)
+            Ok(Bson::Int32(_))
         ));
         assert!(matches!(
             generate_fake_value("fake.currency.code", &ids_pool),
-            Bson::String(_)
+            Ok(Bson::String(_))
         ));
         assert!(matches!(
             generate_fake_value("fake.random.uuid", &ids_pool),
-            Bson::String(_)
+            Ok(Bson::String(_))
         ));
     }
 
@@ -266,7 +314,7 @@ mod tests {
             "last_name": "fake.name.lastName",
             "address": {
                 "street": "fake.address.streetName",
-                "city": "fake.address.city"
+                "city": "fake.address.cityName"
             },
             "emails": ["fake.internet.email"],
             "numbers": ["fake.number.i32"]
@@ -275,7 +323,7 @@ mod tests {
         let ids_pool = HashMap::new();
         let schema_map: HashMap<String, serde_json::Value> =
             schema.as_object().unwrap().clone().into_iter().collect();
-        let generated_data = generate_data(&schema_map, 3, &ids_pool);
+        let generated_data = generate_data(&schema_map, 3, &ids_pool).unwrap();
 
         assert!(generated_data
             .as_document()
