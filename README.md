@@ -38,34 +38,34 @@ Run the following command to start the seeder:
       "number_of_items": 500,
       "number_of_children": 5,
       "schema": {
-        "firstName": "fake.name.firstName",
-        "lastName": "fake.name.lastName",
-        "emails": ["fake.internet.email"],
+        "firstName": "name.firstName",
+        "lastName": "name.lastName",
+        "emails": ["internet.email"],
         "address": {
-          "city": "fake.address.city",
-          "street": "fake.address.streetName",
-          "zipCode": "fake.address.zipCode"
+          "city": "address.city",
+          "street": "address.streetName",
+          "zipCode": "address.zipCode"
         },
         "friends": [
           {
-            "firstName": "fake.name.firstName",
-            "lastName": "fake.name.lastName"
+            "firstName": "name.firstName",
+            "lastName": "name.lastName"
           }
         ],
-        "age": "fake.number.u8"
+        "age": "number.u8"
       }
     },
     {
       "name": "products",
       "number_of_items": 200,
       "schema": {
-        "productName": "fake.name.fullName",
-        "price": "fake.number.i32",
+        "productName": "name.fullName",
+        "price": "number.i32",
         "category": "ref.categories",
         "reviews": [
           {
-            "username": "fake.internet.username",
-            "rating": "fake.number.u8"
+            "username": "internet.username",
+            "rating": "number.u8"
           }
         ]
       }
@@ -74,7 +74,7 @@ Run the following command to start the seeder:
       "name": "orders",
       "number_of_items": 1000,
       "schema": {
-        "orderNumber": "fake.random.uuid",
+        "orderNumber": "random.uuid",
         "user": "ref.users",
         "status": "from.created|processed|shipped",
         "products": ["ref.products"]
@@ -84,7 +84,7 @@ Run the following command to start the seeder:
       "name": "categories",
       "number_of_items": 50,
       "schema": {
-        "categoryName": "fake.internet.username"
+        "categoryName": "internet.username"
       }
     }
   ]
@@ -96,127 +96,127 @@ Run the following command to start the seeder:
 #### Address
 
 ```
-fake.address.buildingNumber
-fake.address.cityName
-fake.address.cityPrefix
-fake.address.citySuffix
-fake.address.countryCode
-fake.address.countryName
-fake.address.latitude
-fake.address.longitude
-fake.address.postCode
-fake.address.secondaryAddress
-fake.address.stateAbbr
-fake.address.stateName
-fake.address.streetName
-fake.address.streetSuffix
-fake.address.timeZone
-fake.address.zipCode
+address.buildingNumber
+address.cityName
+address.cityPrefix
+address.citySuffix
+address.countryCode
+address.countryName
+address.latitude
+address.longitude
+address.postCode
+address.secondaryAddress
+address.stateAbbr
+address.stateName
+address.streetName
+address.streetSuffix
+address.timeZone
+address.zipCode
 ```
 
 #### Boolean
 
 ```
-fake.boolean.boolean
+boolean.boolean
 ```
 
 #### Crono
 
 ```
-fake.chrono.date
-fake.chrono.datetime
-fake.chrono.duration
-fake.chrono.time
+chrono.date
+chrono.datetime
+chrono.duration
+chrono.time
 ```
 
 #### Company
 
 ```
-fake.company.bs
-fake.company.buzzword
-fake.company.catchPhrase
-fake.company.name
-fake.company.profession
-fake.company.suffix
-fake.company.industry
+company.bs
+company.buzzword
+company.catchPhrase
+company.name
+company.profession
+company.suffix
+company.industry
 ```
 
 #### Carta di Credito
 
 ```
-fake.creditCard.number
+creditCard.number
 ```
 
 #### Currency
 
 ```
-fake.currency.code
-fake.currency.name
-fake.currency.symbol
+currency.code
+currency.name
+currency.symbol
 ```
 
 #### FileSystem
 
 ```
-fake.fileSystem.extension
-fake.fileSystem.fileName
-fake.fileSystem.filePath
-fake.fileSystem.mimeType
+fileSystem.extension
+fileSystem.fileName
+fileSystem.filePath
+fileSystem.mimeType
 ```
 
 #### Internet
 
 ```
-fake.internet.domainSuffix
-fake.internet.freeEmail
-fake.internet.ipV4
-fake.internet.ipV6
-fake.internet.password
-fake.internet.email
-fake.internet.username
+internet.domainSuffix
+internet.freeEmail
+internet.ipV4
+internet.ipV6
+internet.password
+internet.email
+internet.username
 ```
 
 #### Job
 
 ```
-fake.job.field
-fake.job.position
-fake.job.seniority
-fake.job.title
+job.field
+job.position
+job.seniority
+job.title
 ```
 
 #### Lorem
 
 ```
-fake.lorem.sentence
-fake.lorem.word
-fake.lorem.paragraph
+lorem.sentence
+lorem.word
+lorem.paragraph
 ```
 
 #### Name
 
 ```
-fake.name.firstName
-fake.name.lastName
-fake.name.fullName
+name.firstName
+name.lastName
+name.fullName
 ```
 
 #### Number
 
 ```
-fake.number.u8
-fake.number.i32
-fake.number.u32
-fake.number.i64
-fake.number.u64
-fake.number.f32
-fake.number.f64
+number.u8
+number.i32
+number.u32
+number.i64
+number.u64
+number.f32
+number.f64
 ```
 
 #### Uuid
 
 ```
-fake.random.uuid
+random.uuid
 ```
 
 #### Reference

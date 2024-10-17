@@ -6,34 +6,34 @@
       "number_of_items": 500,
       "number_of_children": 5,
       "schema": {
-        "firstName": "fake.name.firstName",
-        "lastName": "fake.name.lastName",
-        "emails": ["fake.internet.email"],
+        "firstName": "name.firstName",
+        "lastName": "name.lastName",
+        "emails": ["internet.email"],
         "address": {
-          "city": "fake.address.cityName",
-          "street": "fake.address.streetName",
-          "zipCode": "fake.address.zipCode"
+          "city": "address.cityName",
+          "street": "address.streetName",
+          "zipCode": "address.zipCode"
         },
         "friends": [
           {
-            "firstName": "fake.name.firstName",
-            "lastName": "fake.name.lastName"
+            "firstName": "name.firstName",
+            "lastName": "name.lastName"
           }
         ],
-        "age": "fake.number.u8"
+        "age": "number.u8"
       }
     },
     {
       "name": "products",
       "number_of_items": 200,
       "schema": {
-        "productName": "fake.name.fullName",
-        "price": "fake.number.i32",
+        "productName": "name.fullName",
+        "price": "number.i32",
         "category": "ref.categories",
         "reviews": [
           {
-            "username": "fake.internet.username",
-            "rating": "fake.number.u8"
+            "username": "internet.username",
+            "rating": "number.u8"
           }
         ]
       }
@@ -42,7 +42,7 @@
       "name": "orders",
       "number_of_items": 1000,
       "schema": {
-        "orderNumber": "fake.random.uuid",
+        "orderNumber": "random.uuid",
         "user": "ref.users",
         "status": "from.created|processed|shipped",
         "products": ["ref.products"]
@@ -52,7 +52,7 @@
       "name": "categories",
       "number_of_items": 50,
       "schema": {
-        "categoryName": "fake.internet.username"
+        "categoryName": "internet.username"
       }
     }
   ]

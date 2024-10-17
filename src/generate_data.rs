@@ -23,149 +23,133 @@ fn generate_fake_value(
 ) -> Result<Bson, GenerateDataError> {
     match fake_method {
         // Address
-        "fake.address.buildingNumber" => Ok(Bson::String(
+        "address.buildingNumber" => Ok(Bson::String(
             BuildingNumber(fake::locales::EN).fake::<String>(),
         )),
-        "fake.address.cityName" => Ok(Bson::String(CityName(fake::locales::EN).fake::<String>())),
-        "fake.address.cityPrefix" => {
-            Ok(Bson::String(CityPrefix(fake::locales::EN).fake::<String>()))
-        }
-        "fake.address.citySuffix" => {
-            Ok(Bson::String(CitySuffix(fake::locales::EN).fake::<String>()))
-        }
-        "fake.address.countryCode" => Ok(Bson::String(
+        "address.cityName" => Ok(Bson::String(CityName(fake::locales::EN).fake::<String>())),
+        "address.cityPrefix" => Ok(Bson::String(CityPrefix(fake::locales::EN).fake::<String>())),
+        "address.citySuffix" => Ok(Bson::String(CitySuffix(fake::locales::EN).fake::<String>())),
+        "address.countryCode" => Ok(Bson::String(
             CountryCode(fake::locales::EN).fake::<String>(),
         )),
-        "fake.address.countryName" => Ok(Bson::String(
+        "address.countryName" => Ok(Bson::String(
             CountryName(fake::locales::EN).fake::<String>(),
         )),
-        "fake.address.latitude" => Ok(Bson::String(Latitude(fake::locales::EN).fake::<String>())),
-        "fake.address.longitude" => Ok(Bson::String(Longitude(fake::locales::EN).fake::<String>())),
-        "fake.address.postCode" => Ok(Bson::String(PostCode(fake::locales::EN).fake::<String>())),
-        "fake.address.secondaryAddress" => Ok(Bson::String(
+        "address.latitude" => Ok(Bson::String(Latitude(fake::locales::EN).fake::<String>())),
+        "address.longitude" => Ok(Bson::String(Longitude(fake::locales::EN).fake::<String>())),
+        "address.postCode" => Ok(Bson::String(PostCode(fake::locales::EN).fake::<String>())),
+        "address.secondaryAddress" => Ok(Bson::String(
             SecondaryAddress(fake::locales::EN).fake::<String>(),
         )),
-        "fake.address.stateAbbr" => Ok(Bson::String(StateAbbr(fake::locales::EN).fake::<String>())),
-        "fake.address.stateName" => Ok(Bson::String(StateName(fake::locales::EN).fake::<String>())),
-        "fake.address.streetName" => {
-            Ok(Bson::String(StreetName(fake::locales::EN).fake::<String>()))
-        }
-        "fake.address.streetSuffix" => Ok(Bson::String(
+        "address.stateAbbr" => Ok(Bson::String(StateAbbr(fake::locales::EN).fake::<String>())),
+        "address.stateName" => Ok(Bson::String(StateName(fake::locales::EN).fake::<String>())),
+        "address.streetName" => Ok(Bson::String(StreetName(fake::locales::EN).fake::<String>())),
+        "address.streetSuffix" => Ok(Bson::String(
             StreetSuffix(fake::locales::EN).fake::<String>(),
         )),
-        "fake.address.timeZone" => Ok(Bson::String(TimeZone(fake::locales::EN).fake::<String>())),
-        "fake.address.zipCode" => Ok(Bson::String(ZipCode(fake::locales::EN).fake::<String>())),
+        "address.timeZone" => Ok(Bson::String(TimeZone(fake::locales::EN).fake::<String>())),
+        "address.zipCode" => Ok(Bson::String(ZipCode(fake::locales::EN).fake::<String>())),
 
         // Boolean
-        "fake.boolean.boolean" => Ok(Bson::Boolean(Boolean(fake::locales::EN, 1).fake())),
+        "boolean.boolean" => Ok(Bson::Boolean(Boolean(fake::locales::EN, 1).fake())),
 
         // Chrono
-        "fake.chrono.date" => Ok(Bson::String(
+        "chrono.date" => Ok(Bson::String(
             fake::faker::chrono::raw::Date(fake::locales::EN).fake::<String>(),
         )),
-        "fake.chrono.datetime" => Ok(Bson::String(
+        "chrono.datetime" => Ok(Bson::String(
             fake::faker::chrono::raw::DateTime(fake::locales::EN).fake::<String>(),
         )),
-        "fake.chrono.duration" => Ok(Bson::String(
+        "chrono.duration" => Ok(Bson::String(
             fake::faker::number::raw::NumberWithFormat(fake::locales::EN, "###").fake::<String>(),
         )),
-        "fake.chrono.time" => Ok(Bson::String(
+        "chrono.time" => Ok(Bson::String(
             fake::faker::chrono::raw::Time(fake::locales::EN).fake::<String>(),
         )),
 
         // Company
-        "fake.company.bs" => Ok(Bson::String(Bs(fake::locales::EN).fake::<String>())),
-        "fake.company.buzzword" => Ok(Bson::String(Buzzword(fake::locales::EN).fake::<String>())),
-        "fake.company.catchPhrase" => Ok(Bson::String(
+        "company.bs" => Ok(Bson::String(Bs(fake::locales::EN).fake::<String>())),
+        "company.buzzword" => Ok(Bson::String(Buzzword(fake::locales::EN).fake::<String>())),
+        "company.catchPhrase" => Ok(Bson::String(
             CatchPhrase(fake::locales::EN).fake::<String>(),
         )),
-        "fake.company.name" => Ok(Bson::String(
+        "company.name" => Ok(Bson::String(
             CompanyName(fake::locales::EN).fake::<String>(),
         )),
-        "fake.company.profession" => {
-            Ok(Bson::String(Profession(fake::locales::EN).fake::<String>()))
-        }
-        "fake.company.suffix" => Ok(Bson::String(Suffix(fake::locales::EN).fake::<String>())),
-        "fake.company.industry" => Ok(Bson::String(Industry(fake::locales::EN).fake::<String>())),
+        "company.profession" => Ok(Bson::String(Profession(fake::locales::EN).fake::<String>())),
+        "company.suffix" => Ok(Bson::String(Suffix(fake::locales::EN).fake::<String>())),
+        "company.industry" => Ok(Bson::String(Industry(fake::locales::EN).fake::<String>())),
 
         // CreditCard
-        "fake.creditCard.number" => Ok(Bson::String(
+        "creditCard.number" => Ok(Bson::String(
             CreditCardNumber(fake::locales::EN).fake::<String>(),
         )),
 
         // Currency
-        "fake.currency.code" => Ok(Bson::String(
+        "currency.code" => Ok(Bson::String(
             CurrencyCode(fake::locales::EN).fake::<String>(),
         )),
-        "fake.currency.name" => Ok(Bson::String(
+        "currency.name" => Ok(Bson::String(
             CurrencyName(fake::locales::EN).fake::<String>(),
         )),
-        "fake.currency.symbol" => Ok(Bson::String(
+        "currency.symbol" => Ok(Bson::String(
             CurrencySymbol(fake::locales::EN).fake::<String>(),
         )),
 
         // FileSystem
-        "fake.fileSystem.extension" => Ok(Bson::String(
+        "fileSystem.extension" => Ok(Bson::String(
             FileExtension(fake::locales::EN).fake::<String>(),
         )),
-        "fake.fileSystem.fileName" => {
-            Ok(Bson::String(FileName(fake::locales::EN).fake::<String>()))
-        }
-        "fake.fileSystem.filePath" => {
-            Ok(Bson::String(FilePath(fake::locales::EN).fake::<String>()))
-        }
-        "fake.fileSystem.mimeType" => {
-            Ok(Bson::String(MimeType(fake::locales::EN).fake::<String>()))
-        }
+        "fileSystem.fileName" => Ok(Bson::String(FileName(fake::locales::EN).fake::<String>())),
+        "fileSystem.filePath" => Ok(Bson::String(FilePath(fake::locales::EN).fake::<String>())),
+        "fileSystem.mimeType" => Ok(Bson::String(MimeType(fake::locales::EN).fake::<String>())),
 
         // Internet
-        "fake.internet.domainSuffix" => Ok(Bson::String(
+        "internet.domainSuffix" => Ok(Bson::String(
             DomainSuffix(fake::locales::EN).fake::<String>(),
         )),
-        "fake.internet.freeEmail" => {
-            Ok(Bson::String(FreeEmail(fake::locales::EN).fake::<String>()))
-        }
-        "fake.internet.ipV4" => Ok(Bson::String(IPv4(fake::locales::EN).fake::<String>())),
-        "fake.internet.ipV6" => Ok(Bson::String(IPv6(fake::locales::EN).fake::<String>())),
-        "fake.internet.password" => Ok(Bson::String(
+        "internet.freeEmail" => Ok(Bson::String(FreeEmail(fake::locales::EN).fake::<String>())),
+        "internet.ipV4" => Ok(Bson::String(IPv4(fake::locales::EN).fake::<String>())),
+        "internet.ipV6" => Ok(Bson::String(IPv6(fake::locales::EN).fake::<String>())),
+        "internet.password" => Ok(Bson::String(
             Password(fake::locales::EN, 8..12).fake::<String>(),
         )),
-        "fake.internet.email" => Ok(Bson::String(FreeEmail(fake::locales::EN).fake::<String>())),
-        "fake.internet.username" => Ok(Bson::String(Username(fake::locales::EN).fake::<String>())),
+        "internet.email" => Ok(Bson::String(FreeEmail(fake::locales::EN).fake::<String>())),
+        "internet.username" => Ok(Bson::String(Username(fake::locales::EN).fake::<String>())),
 
         // Job
-        "fake.job.field" => Ok(Bson::String(Field(fake::locales::EN).fake::<String>())),
-        "fake.job.position" => Ok(Bson::String(Position(fake::locales::EN).fake::<String>())),
-        "fake.job.seniority" => Ok(Bson::String(Seniority(fake::locales::EN).fake::<String>())),
-        "fake.job.title" => Ok(Bson::String(JobTitle(fake::locales::EN).fake::<String>())),
+        "job.field" => Ok(Bson::String(Field(fake::locales::EN).fake::<String>())),
+        "job.position" => Ok(Bson::String(Position(fake::locales::EN).fake::<String>())),
+        "job.seniority" => Ok(Bson::String(Seniority(fake::locales::EN).fake::<String>())),
+        "job.title" => Ok(Bson::String(JobTitle(fake::locales::EN).fake::<String>())),
 
         // Lorem
-        "fake.lorem.sentence" => Ok(Bson::String(
+        "lorem.sentence" => Ok(Bson::String(
             Sentence(fake::locales::EN, 1..5).fake::<String>(),
         )),
-        "fake.lorem.word" => Ok(Bson::String(Word(fake::locales::EN).fake::<String>())),
-        "fake.lorem.paragraph" => Ok(Bson::String(
+        "lorem.word" => Ok(Bson::String(Word(fake::locales::EN).fake::<String>())),
+        "lorem.paragraph" => Ok(Bson::String(
             Paragraph(fake::locales::EN, 1..5).fake::<String>(),
         )),
 
         // Name
-        "fake.name.firstName" => Ok(Bson::String(FirstName(fake::locales::EN).fake::<String>())),
-        "fake.name.lastName" => Ok(Bson::String(LastName(fake::locales::EN).fake::<String>())),
-        "fake.name.fullName" => Ok(Bson::String(format!(
+        "name.firstName" => Ok(Bson::String(FirstName(fake::locales::EN).fake::<String>())),
+        "name.lastName" => Ok(Bson::String(LastName(fake::locales::EN).fake::<String>())),
+        "name.fullName" => Ok(Bson::String(format!(
             "{} {}",
             FirstName(fake::locales::EN).fake::<String>(),
             LastName(fake::locales::EN).fake::<String>()
         ))),
 
-        "fake.number.u8" => Ok(Bson::Int32((0..=255).fake::<u8>() as i32)),
-        "fake.number.i32" => Ok(Bson::Int32((0..=1000).fake::<i32>())),
-        "fake.number.u32" => Ok(Bson::Int64((0..=1000).fake::<u32>() as i64)),
-        "fake.number.i64" => Ok(Bson::Int64((0..=1000).fake::<i64>())),
-        "fake.number.u64" => Ok(Bson::Int64((0..=1000).fake::<u64>() as i64)),
-        "fake.number.f32" => Ok(Bson::Double((0.0..1000.0).fake::<f32>() as f64)),
-        "fake.number.f64" => Ok(Bson::Double((0.0..=1000.0).fake::<f64>())),
+        "number.u8" => Ok(Bson::Int32((0..=255).fake::<u8>() as i32)),
+        "number.i32" => Ok(Bson::Int32((0..=1000).fake::<i32>())),
+        "number.u32" => Ok(Bson::Int64((0..=1000).fake::<u32>() as i64)),
+        "number.i64" => Ok(Bson::Int64((0..=1000).fake::<i64>())),
+        "number.u64" => Ok(Bson::Int64((0..=1000).fake::<u64>() as i64)),
+        "number.f32" => Ok(Bson::Double((0.0..1000.0).fake::<f32>() as f64)),
+        "number.f64" => Ok(Bson::Double((0.0..=1000.0).fake::<f64>())),
 
-        "fake.random.uuid" => Ok(Bson::String(fake::uuid::UUIDv4.fake::<String>())),
+        "random.uuid" => Ok(Bson::String(fake::uuid::UUIDv4.fake::<String>())),
 
         method if fake_method.starts_with("ref") => {
             let collection_name = method.split('.').collect::<Vec<&str>>()[1];
@@ -286,23 +270,23 @@ mod tests {
         let ids_pool = HashMap::new();
 
         assert!(matches!(
-            generate_fake_value("fake.name.firstName", &ids_pool),
+            generate_fake_value("name.firstName", &ids_pool),
             Ok(Bson::String(_))
         ));
         assert!(matches!(
-            generate_fake_value("fake.address.cityName", &ids_pool),
+            generate_fake_value("address.cityName", &ids_pool),
             Ok(Bson::String(_))
         ));
         assert!(matches!(
-            generate_fake_value("fake.number.i32", &ids_pool),
+            generate_fake_value("number.i32", &ids_pool),
             Ok(Bson::Int32(_))
         ));
         assert!(matches!(
-            generate_fake_value("fake.currency.code", &ids_pool),
+            generate_fake_value("currency.code", &ids_pool),
             Ok(Bson::String(_))
         ));
         assert!(matches!(
-            generate_fake_value("fake.random.uuid", &ids_pool),
+            generate_fake_value("random.uuid", &ids_pool),
             Ok(Bson::String(_))
         ));
     }
@@ -310,14 +294,14 @@ mod tests {
     #[test]
     fn test_generate_data() {
         let schema = json!({
-            "first_name": "fake.name.firstName",
-            "last_name": "fake.name.lastName",
+            "first_name": "name.firstName",
+            "last_name": "name.lastName",
             "address": {
-                "street": "fake.address.streetName",
-                "city": "fake.address.cityName"
+                "street": "address.streetName",
+                "city": "address.cityName"
             },
-            "emails": ["fake.internet.email"],
-            "numbers": ["fake.number.i32"]
+            "emails": ["internet.email"],
+            "numbers": ["number.i32"]
         });
 
         let ids_pool = HashMap::new();
