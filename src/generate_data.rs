@@ -8,10 +8,12 @@ use fake::faker::internet::raw::*;
 use fake::faker::job::raw::{Title as JobTitle, *};
 use fake::faker::lorem::raw::*;
 use fake::faker::name::raw::*;
+use fake::faker::phone_number::raw::CellNumber;
 use fake::Fake;
 use mongodb::bson::{oid::ObjectId, Bson};
 use rand::seq::SliceRandom;
 use std::collections::HashMap;
+use std::fmt::format;
 
 use crate::error::GenerateDataError;
 use crate::types::CollectionConfig;
@@ -148,6 +150,10 @@ fn generate_fake_value(
         "number.u64" => Ok(Bson::Int64((0..=1000).fake::<u64>() as i64)),
         "number.f32" => Ok(Bson::Double((0.0..1000.0).fake::<f32>() as f64)),
         "number.f64" => Ok(Bson::Double((0.0..=1000.0).fake::<f64>())),
+        "number.phoneNumber" => Ok(Bson::String(format!(
+            "{}",
+            CellNumber(fake::locales::EN).fake::<String>()
+        ))),
 
         "random.uuid" => Ok(Bson::String(fake::uuid::UUIDv4.fake::<String>())),
 
