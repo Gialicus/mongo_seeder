@@ -13,7 +13,6 @@ use fake::Fake;
 use mongodb::bson::{oid::ObjectId, Bson};
 use rand::seq::SliceRandom;
 use std::collections::HashMap;
-use std::fmt::format;
 
 use crate::error::GenerateDataError;
 use crate::types::CollectionConfig;
