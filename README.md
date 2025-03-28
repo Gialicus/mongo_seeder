@@ -174,6 +174,7 @@ internet.ipV6
 internet.password
 internet.email
 internet.username
+internet.phoneNumber
 ```
 
 #### Job

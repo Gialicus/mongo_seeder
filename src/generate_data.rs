@@ -117,6 +117,10 @@ fn generate_fake_value(
         )),
         "internet.email" => Ok(Bson::String(FreeEmail(fake::locales::EN).fake::<String>())),
         "internet.username" => Ok(Bson::String(Username(fake::locales::EN).fake::<String>())),
+        "internet.phoneNumber" => Ok(Bson::String(format!(
+            "{}",
+            CellNumber(fake::locales::EN).fake::<String>()
+        ))),
 
         // Job
         "job.field" => Ok(Bson::String(Field(fake::locales::EN).fake::<String>())),
@@ -149,10 +153,6 @@ fn generate_fake_value(
         "number.u64" => Ok(Bson::Int64((0..=1000).fake::<u64>() as i64)),
         "number.f32" => Ok(Bson::Double((0.0..1000.0).fake::<f32>() as f64)),
         "number.f64" => Ok(Bson::Double((0.0..=1000.0).fake::<f64>())),
-        "number.phoneNumber" => Ok(Bson::String(format!(
-            "{}",
-            CellNumber(fake::locales::EN).fake::<String>()
-        ))),
 
         "random.uuid" => Ok(Bson::String(fake::uuid::UUIDv4.fake::<String>())),
 
