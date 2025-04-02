@@ -10,6 +10,7 @@ use fake::faker::lorem::raw::*;
 use fake::faker::name::raw::*;
 use fake::faker::phone_number::raw::CellNumber;
 use fake::Fake;
+use mongodb::bson::DateTime;
 use mongodb::bson::{oid::ObjectId, Bson};
 use rand::seq::SliceRandom;
 use std::collections::HashMap;
@@ -58,9 +59,13 @@ fn generate_fake_value(
         "chrono.date" => Ok(Bson::String(
             fake::faker::chrono::raw::Date(fake::locales::EN).fake::<String>(),
         )),
-        "chrono.datetime" => Ok(Bson::String(
-            fake::faker::chrono::raw::DateTime(fake::locales::EN).fake::<String>(),
-        )),
+        "chrono.datetime" => {
+            let fake_datetime =
+                fake::faker::chrono::raw::DateTime(fake::locales::EN).fake::<String>();
+            Ok(Bson::DateTime(
+                DateTime::parse_rfc3339_str(fake_datetime).expect("Cant parse date"),
+            ))
+        }
         "chrono.duration" => Ok(Bson::String(
             fake::faker::number::raw::NumberWithFormat(fake::locales::EN, "###").fake::<String>(),
         )),
